@@ -94,3 +94,32 @@ function createPrompt(table_name) {
         });
 
     }
+
+    if (table_name === "employees") {
+
+        let questions = [
+            {
+                message: "First Name:",
+                name: "firstName"
+            },
+            {
+                message: "Last Name:",
+                name: "lastName"
+            }
+        ];
+
+        db.choices.roles().then(res => {
+            questions.push(formatListQuestion("role","role_id",res));
+            db.choices.employees().then(res => {
+                questions.push({
+                    message: "Select manager:",
+                    type: "list",
+                    name: "manager_id",
+                    choices: res
+                });
+                inquirer.prompt(questions).then(answers => {
+                    db.createRow(answers,table_name,callMainPrompt);  
+                });
+            });
+        });
+    } 
