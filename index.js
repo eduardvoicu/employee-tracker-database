@@ -43,3 +43,17 @@ var mainPrompt = () => {
         }
     });
 }
+
+function viewPrompt() {
+    inquirer.prompt([
+        {
+            message: "View:",
+            type: "list",
+            name: "table_name",
+            choices: [{name: "All Employees", value: "employees"},{name:"All Departments",value: "departments"},{name:"All Roles", value: "roles"}]
+        }
+    ]).then(answers => {
+
+        db.showAll(answers.table_name, callMainPrompt);
+    });
+}
