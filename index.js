@@ -122,4 +122,34 @@ function createPrompt(table_name) {
                 });
             });
         });
+    }
+
+    else if (table_name === "roles") {
+        let questions = [
+            {
+                message: "Role Title:",
+                name: "title"
+            },
+            {
+                message: "Salary",
+                name: "salary",
+                validate: salary => {
+                    if (isNaN(salary)) {
+                        console.log("\n Invalid: Must be a number. Do not include decimals.");
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            }
+        ];
+
+        db.choices.departments().then(res => {
+            questions.push(formatListQuestion("department","department_id",res));   
+            inquirer.prompt(questions).then(answers => {
+                db.createRow(answers,table_name, callMainPrompt);
+    
+            });
+        });
+
     } 
