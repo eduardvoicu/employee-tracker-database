@@ -198,4 +198,22 @@ function updatePrompt(table_name) {
             if (answers.table_name === "mainMenu") return mainPrompt();
             return updatePrompt(answers.table_name);
         });
-        
+
+    } else {
+
+        db.showAll(table_name, () => {});
+
+        if (table_name === "employees") {
+
+            db.choices.employees().then(res => {
+
+                inquirer.prompt([
+                    formatListQuestion("employee","employee_id",res),
+                    {
+                        message: "What do you want to update for this employee?",
+                        name: "whatToUpdate",
+                        type: "list",
+                        choices: ["Role","Manager","Both"]
+                    }
+                ]).then(answers => {
+
