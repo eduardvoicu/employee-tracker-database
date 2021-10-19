@@ -153,3 +153,16 @@ function createPrompt(table_name) {
         });
 
     } 
+
+    else if (table_name === "departments") {
+        inquirer.prompt([
+            {
+                message: "Department Name:",
+                name: "name"
+            }
+        ]).then(answers => {
+            db.createRow(answers,table_name, callMainPrompt);
+        });
+    }
+
+}
