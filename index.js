@@ -57,3 +57,40 @@ function viewPrompt() {
         db.showAll(answers.table_name, callMainPrompt);
     });
 }
+
+function createPrompt(table_name) {
+
+    if (table_name === false) {
+
+        inquirer.prompt([
+            {
+                message: "What do you want to add?",
+                name: "table_name",
+                type: "list",
+                choices: [
+                    {
+                        name: "New Employee",
+                        value: "employees"
+                    },
+                    {
+                        name: "New Role",
+                        value: "roles"
+                    },
+                    {
+                        name: "New Department",
+                        value: "departments"
+                    },
+                    {
+                        name: "Back to Main Menu",
+                        value: "mainMenu"
+                    }
+                ]
+            }
+        ]).then(answers => {
+
+            if (answers.table_name === "mainMenu") return mainPrompt();
+
+            return createPrompt(answers.table_name);
+        });
+
+    }
