@@ -19,3 +19,27 @@ var init = () => {
     });
     
 }
+
+var mainPrompt = () => {
+    inquirer.prompt([
+        {
+            message: "What do you want to do?",
+            type: "list",
+            name: "doWhat",
+            choices: ["View","Add","Edit","Remove","Quit"]
+        }
+    ]).then(answers => {
+        switch(answers.doWhat) {
+            case "View":
+                return viewPrompt();
+            case "Add":
+                return createPrompt(false);
+            case "Edit":
+                return updatePrompt(false);
+            case "Remove":
+                return removePrompt(false);
+            case "Quit":
+                return quitApp();
+        }
+    });
+}
