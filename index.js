@@ -166,3 +166,31 @@ function createPrompt(table_name) {
     }
 
 }
+
+function updatePrompt(table_name) {
+    if (table_name === false) {
+
+        inquirer.prompt([
+            {
+                message: "What do you want to edit?",
+                name: "table_name",
+                type: "list",
+                choices: [
+                    {
+                        name: "Employee",
+                        value: "employees"
+                    },
+                    {
+                        name: "Role",
+                        value: "roles"
+                    },
+                    {
+                        name: "Department",
+                        value: "departments"
+                    },
+                    {
+                        name: "Back to Main Menu",
+                        value: "mainMenu"
+                    }
+                ]
+            }
