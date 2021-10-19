@@ -234,3 +234,23 @@ function updatePrompt(table_name) {
                                     db.update(table_name,answers,id,callMainPrompt);
                                 });
                             });
+                            break;
+                            case "Both":
+                                db.choices.roles().then(res => {
+                                    inquirer.prompt([formatListQuestion("role","role_id",res)]).then(answers => {
+                                        let newInfo = answers;
+                                        db.choices.employees().then(res => {
+                                            inquirer.prompt([formatListQuestion("manager","manager_id",res)]).then(answers => {
+                                                newInfo.department_id = answers.department_id;
+                                                db.update(table_name,newInfo,id,callMainPrompt);
+                                            }); 
+                                        });
+                                    }); 
+                                });
+                                break;
+    
+                        }
+    
+                    });
+                });
+            } 
