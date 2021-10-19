@@ -194,3 +194,8 @@ function updatePrompt(table_name) {
                     }
                 ]
             }
+        ]).then(answers => {
+            if (answers.table_name === "mainMenu") return mainPrompt();
+            return updatePrompt(answers.table_name);
+        });
+        
