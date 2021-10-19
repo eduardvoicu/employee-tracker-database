@@ -217,3 +217,20 @@ function updatePrompt(table_name) {
                     }
                 ]).then(answers => {
 
+                    let id = {id: answers.employee_id};
+
+                    switch(answers.whatToUpdate) {
+
+                        case "Role":
+                            db.choices.roles().then(res => {
+                                inquirer.prompt([formatListQuestion("role","role_id",res)]).then(answers => {
+                                    db.update(table_name,answers,id,callMainPrompt);
+                                }); 
+                            });
+                            break;
+                        case "Manager":
+                            db.choices.employees().then(res => {
+                                inquirer.prompt([formatListQuestion("manager","manager_id",res)]).then(answers => {
+                                    db.update(table_name,answers,id,callMainPrompt);
+                                });
+                            });
