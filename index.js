@@ -254,3 +254,27 @@ function updatePrompt(table_name) {
                     });
                 });
             } 
+
+            else if (table_name === "roles") {
+                db.choices.roles().then(res => {
+                    inquirer.prompt([
+                        formatListQuestion("role","id",res),
+                        {
+                            message: "What do you want to change?",
+                            type: "list",
+                            name: "whatToChange",
+                            choices: ["Title","Salary","Department"]
+                        }
+                    ]).then(answers => {
+                        let roleId = answers.id;
+                        switch(answers.whatToChange) {
+                            case "Title":
+                                inquirer.prompt([
+                                    {
+                                        message: "New title:",
+                                        name: "title"
+                                    }
+                                ]).then(answers => {
+                                    db.update(table_name, answers, {id: roleId}, callMainPrompt);
+                                });
+                                break;
