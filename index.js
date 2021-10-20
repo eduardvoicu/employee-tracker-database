@@ -424,3 +424,18 @@ function quitApp() {
         db.connection.end();
     });
 }
+
+function formatListQuestion(identifier, colName, choices) {
+    return {
+        message: `Select ${identifier}:`,
+        type: "list",
+        name: `${colName}`,
+        choices
+    };
+}
+
+function callMainPrompt() {
+    mainPrompt();
+}
+
+module.exports.init = init;
