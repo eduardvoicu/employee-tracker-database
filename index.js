@@ -278,3 +278,35 @@ function updatePrompt(table_name) {
                                     db.update(table_name, answers, {id: roleId}, callMainPrompt);
                                 });
                                 break;
+                                case "Salary":
+                            inquirer.prompt([
+                                {
+                                    message: "New salary:",
+                                    name: "salary",
+                                    validate: salary => {
+                                        if (isNaN(salary)) {
+                                            console.log("\n Invalid: Must be a number. Do not include decimals.");
+                                            return false;
+                                        } else {
+                                            return true;
+                                        }
+                                    }
+                                }
+                            ]).then(answers => {
+                                db.update(table_name, answers, {id: roleId}, callMainPrompt);
+                            });
+                            break;
+                        case "Department":
+                            db.choices.departments().then(res => {
+                                inquirer.prompt([
+                                    formatListQuestion("department","department_id",res)
+                                ]).then(answers => {
+                                    db.update(table_name, answers, {id: roleId}, callMainPrompt);
+                                });
+                            });
+                            break;
+                    }
+                });
+            });
+
+        } 
