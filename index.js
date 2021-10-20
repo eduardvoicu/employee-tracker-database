@@ -414,3 +414,13 @@ function removePrompt(table_name) {
         }
     }
 }
+
+function quitApp() {
+    console.log("\n"+"=".repeat(62)+"\n");
+    ascii.create('    Goodbye!','Doom',(err, result) => {
+        if (err) throw err;
+        console.log(result);
+        console.log("\n"+"=".repeat(62)+"\n");
+        db.connection.end();
+    });
+}
