@@ -310,3 +310,19 @@ function updatePrompt(table_name) {
             });
 
         } 
+ 
+        else if (table_name === "departments") {
+            db.choices.departments().then(res => {
+                inquirer.prompt([
+                    formatListQuestion("department","id",res),
+                    {
+                        message: "New department name:",
+                        name: "name"
+                    }
+                ]).then(answers => {
+                    db.update(table_name, {name: answers.name}, {id: answers.id}, callMainPrompt);
+                });
+            });
+        }
+    }
+}
