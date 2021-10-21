@@ -150,3 +150,32 @@ var getRoleChoices = function() {
     });
 }
 
+var getDepartmentChoices = function() {
+    return getSpecific('id,name','departments').then(res => {
+        let departmentChoices = [];
+        res.forEach(choice => {
+            departmentChoices.push({name: choice.name, value: choice.id });
+        });
+        return new Promise(function(resolve,reject) {
+            if (departmentChoices.length > 0) {
+                resolve(departmentChoices);
+            } else {
+                reject(new Error("There was a problem retrieving departments."));
+            }
+        });
+    });
+}
+
+module.exports = {
+    connection: db,
+    getSpecific: getSpecific,
+    showAll: showAll,
+    createRow: createRow,
+    update: update,
+    deleteRow: deleteRow,
+    choices: {
+        employees: getEmployeeChoices,
+        roles: getRoleChoices,
+        departments: getDepartmentChoices
+    }
+}
