@@ -90,4 +90,63 @@ var update = (table_name, new_data, id, callback) => {
     });
 }
 
+var deleteRow = (table_name, id, callback) => {
+
+    db.query('DELETE FROM ?? WHERE ?',[table_name,id], function(err,res) {
+
+        if (table_name === "roles") {
+            db.query("DELETE FROM employees WHERE role_id IN (SELECT role_id FROM roles WHERE role_id = ?);",[id.id],function(err,result) {
+                if (err) throw err;
+                console.log("\n Successfully deleted role and all employees associated with it.\n");
+                return callback();
+            });
+        } else if (table_name === "departments") {
+            db.query("DELETE FROM employees WHERE role_id IN (SELECT id FROM roles WHERE department_id = "+id.id+");", function(err, result) {
+                if (err) throw err;
+                db.query("DELETE FROM roles WHERE department_id = ?",[id.id],function(err, result) {
+                    if (err) throw err;
+                    console.log("\n Successfully deleted department and the roles and employees associated with it. \n");
+                    callback();
+                });
+            });
+        } else if (table_name === "employees") {
+            console.log("\n Successfully deleted employee.\n");
+            callback();
+        }
+            
+    });
+
+}
+
+var getEmployeeChoices = function() {
+    return getSpecific('id,firstName,lastName','employees').then(res => {
+        let employeeChoices = [];
+        res.forEach(choice => {
+            employeeChoices.push({name: choice.firstName + " "+choice.lastName, value: choice.id });
+        });
+        return new Promise(function(resolve,reject) {
+            if (employeeChoices.length > 0) {
+                resolve(employeeChoices);
+            } else {
+                reject(new Error("There was a problem retrieving employees"));
+            }
+        });
+    });
+}
+
+var getRoleChoices = function() {
+    return getSpecific('id,title','roles').then(res => {
+        let roleChoices = [];
+        res.forEach(choice => {
+            roleChoices.push({name: choice.title, value: choice.id });
+        });
+        return new Promise(function(resolve,reject) {
+            if (roleChoices.length > 0) {
+                resolve(roleChoices);
+            } else {
+                reject(new Error("There was a problem retrieving roles."));
+            }
+        });
+    });
+}
 
