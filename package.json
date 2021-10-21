@@ -1,8 +1,21 @@
 {
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "A CLI application for managing employees.",
+  "main": "index.js",
+  "scripts": {
+    "test": "no"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "inquirer": "^8.2.0",
-    "mysql2": "^2.3.1"
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.1",
+    "run": "^1.4.0",
+    "start": "^5.1.0"
+    "ascii-art-font": "^1.0.2",
+    "console.table": "^0.10.0",
+    "dotenv": "^8.2.0"
   }
 }
