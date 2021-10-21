@@ -50,3 +50,44 @@ var showAll = (table_name,callback) => {
         GROUP BY departments.id
         ORDER BY name ASC`;
     }
+
+    db.query(query,table_name,(err,res) => {
+        if (err) throw err;
+        console.log('\n');
+        console.table(res);
+        callback();
+    });
+}
+
+var createRow = (data,table_name,callback) => {
+    db.query(`INSERT INTO ${table_name} SET ?`,[data],function(err,res) {
+        if (err) throw err;
+        console.log("\nSuccess! Added to "+table_name+".\n");
+        callback();
+    });
+}
+
+var getSpecific = (columns, table) => {
+    return new Promise(function(resolve, reject){
+        db.query(`SELECT ${columns} FROM ${table}`,(err,res) => {
+            if (err) throw err;
+
+            if (res === undefined) {
+                reject(new Error("Not found."));
+            } else {
+                resolve(res);
+            }
+            
+        });
+
+    });
+}
+
+var update = (table_name, new_data, id, callback) => {
+    db.query('UPDATE ?? SET ? WHERE ?',[table_name,new_data,id],function(err,res) {
+        console.log("\nSuccessfully updated "+table_name.slice(0,-1)+"!\n");
+        callback();
+    });
+}
+
+
