@@ -7,15 +7,15 @@
     "test": "no"
   },
   "dependencies": {
+    "ascii-art-font": "^1.0.2",
     "bcrypt": "^5.0.1",
+    "console.table": "^0.10.0",
+    "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "inquirer": "^8.2.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.1",
     "run": "^1.4.0",
     "start": "^5.1.0"
-    "ascii-art-font": "^1.0.2",
-    "console.table": "^0.10.0",
-    "dotenv": "^8.2.0"
   }
 }
