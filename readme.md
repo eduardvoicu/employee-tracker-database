@@ -3,6 +3,7 @@
 ## Repository & Video Walkthrough
 
 Video Walkthrough: https://vimeo.com/637703996/cf0656a08c
+
 [Repository](https://github.com/eduardvoicu/employee-tracker-database)
 
 ## Directory
